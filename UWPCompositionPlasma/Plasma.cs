@@ -11,6 +11,8 @@ using Microsoft.Toolkit.Uwp.Helpers;
 
 namespace UWPCompositionPlasma
 {
+    // Credit to http://lodev.org/cgtutor/plasma.html
+    // For the Plasma algorithms
     public class Plasma
     {
         #region Fields
