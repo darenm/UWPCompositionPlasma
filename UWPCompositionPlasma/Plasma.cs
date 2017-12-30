@@ -90,15 +90,15 @@ namespace UWPCompositionPlasma
                 for (var x = 0; x < _height; x++)
                 {
                     var rectangle = c.CreateRectangleGeometry();
-                    rectangle.Size = new Vector2(_rectangleWidth);
+                    rectangle.Size = new Vector2(_rectangleWidth+1);
 
 
                     // Need to create a sprite shape from the rounded rect
                     var spriteShape = c.CreateSpriteShape(rectangle);
                     var colorBrush = Palette[PlasmaColors[y][x]];
-                    spriteShape.StrokeBrush = colorBrush;
+                    //spriteShape.StrokeBrush = colorBrush;
                     spriteShape.FillBrush = colorBrush;
-                    spriteShape.StrokeThickness = 1;
+                    spriteShape.StrokeThickness = 0;
                     spriteShape.Offset = new Vector2(_rectangleWidth * y, _rectangleWidth * x);
 
                     _spriteShapes.Add(GenerateXYIndex(x, y), spriteShape);
@@ -129,7 +129,7 @@ namespace UWPCompositionPlasma
                 for (var x = 0; x < _height; x++)
                 {
                     var rectangle = c.CreateSpriteVisual();
-                    rectangle.Size = new Vector2(_rectangleWidth);
+                    rectangle.Size = new Vector2(_rectangleWidth+1);
                     rectangle.Brush = Palette[PlasmaColors[y][x]];
                     rectangle.Offset = new Vector3(_rectangleWidth * y, _rectangleWidth * x, 0);
 

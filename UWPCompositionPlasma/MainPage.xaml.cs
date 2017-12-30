@@ -27,24 +27,25 @@ namespace UWPCompositionPlasma
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        private Plasma _plasma;
+        private readonly Plasma _plasma;
 
         public MainPage()
         {
             this.InitializeComponent();
+            _plasma = new Plasma(180, 180, 5);
             Loaded += OnLoaded;
-            _plasma = new Plasma(150, 150, 5);
         }
 
         private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
         {
             //_plasma.RenderPalette(RootGrid);
-            //_plasma.RenderRectangleGeometry(RootGrid);
-            _plasma.RenderSolidSpriteVisual(RootGrid);
 
+            // This won't render at 200x200
+            _plasma.RenderRectangleGeometry(RootGrid);
+            Dispatcher.RunAsync(CoreDispatcherPriority.High, () => _plasma.AnimateRectangleGeometry());
 
-            //Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => _plasma.AnimateRectangleGeometry());
-            Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => _plasma.AnimateSpriteVisual());
+            //_plasma.RenderSolidSpriteVisual(RootGrid);
+            //Dispatcher.RunAsync(CoreDispatcherPriority.High, () => _plasma.AnimateSpriteVisual());
 
         }
 
