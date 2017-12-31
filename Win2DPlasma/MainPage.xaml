@@ -1,15 +1,19 @@
 ﻿<Page
-    x:Class="UWPCompositionPlasma.MainPage"
+    x:Class="Win2DPlasma.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:UWPCompositionPlasma"
+    xmlns:local="using:Win2DPlasma"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:xaml="using:Microsoft.Graphics.Canvas.UI.Xaml"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-          x:Name="RootGrid">
-        
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <xaml:CanvasAnimatedControl x:Name="AnimatedControl"
+                                    Draw="AnimatedControl_OnDraw"
+                                    CreateResources="AnimatedControl_OnCreateResources"
+                                    Update="AnimatedControl_OnUpdate"/>
+
         <TextBlock x:Name="FrameRate"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Bottom"

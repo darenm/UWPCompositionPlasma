@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Numerics;
@@ -17,6 +18,7 @@ using Windows.UI.Xaml.Hosting;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using PlasmaLibrary;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -27,13 +29,26 @@ namespace UWPCompositionPlasma
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        private readonly Plasma _plasma;
+        private readonly PlasmaBase _plasma;
+        private readonly DispatcherTimer _timer = new DispatcherTimer();
+        private readonly Stopwatch _stopwatch = new Stopwatch();
 
         public MainPage()
         {
             this.InitializeComponent();
-            _plasma = new Plasma(180, 180, 5);
+            //_plasma = new PlasmaRectangleGeometry(150, 150, 5, RootGrid);
+            _plasma = new PlasmaSpriteVisual(150, 150, 5, RootGrid);
+            //_plasma = new PlasmaRectangleGeometry(150, 150, 5, RootGrid);
+            _timer.Interval = TimeSpan.FromSeconds(5);
+            _timer.Tick += TimerOnTick;
             Loaded += OnLoaded;
+        }
+
+        private void TimerOnTick(object sender, object o)
+        {
+            double v = _stopwatch.ElapsedMilliseconds;
+            double fps = _plasma.PaletteOffset / (v / 1000d);
+            FrameRate.Text = $"{fps} fps";
         }
 
         private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
@@ -41,11 +56,11 @@ namespace UWPCompositionPlasma
             //_plasma.RenderPalette(RootGrid);
 
             // This won't render at 200x200
-            _plasma.RenderRectangleGeometry(RootGrid);
-            Dispatcher.RunAsync(CoreDispatcherPriority.High, () => _plasma.AnimateRectangleGeometry());
+            _plasma.Render();
+            _stopwatch.Start();
+            Dispatcher.RunAsync(CoreDispatcherPriority.High, () => _plasma.Animate());
 
-            //_plasma.RenderSolidSpriteVisual(RootGrid);
-            //Dispatcher.RunAsync(CoreDispatcherPriority.High, () => _plasma.AnimateSpriteVisual());
+            _timer.Start();
 
         }
 
